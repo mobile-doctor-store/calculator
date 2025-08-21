@@ -7,6 +7,7 @@
   <meta name="keywords" content="scientific calculator, graph calculator, online calculator, math calculator, trigonometry, logarithm, algebra calculator">
   <meta name="author" content="MobileDoctor">
   <meta name="robots" content="index, follow">
+  <meta name="google-adsense-account" content="ca-pub-2488763930939291">
   
   <!-- Open Graph Tags -->
   <meta property="og:title" content="Advanced Scientific Calculator with Graph Visualization">
@@ -58,6 +59,10 @@
   }
   </script>
 
+  <!-- Google AdSense Code -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2488763930939291"
+     crossorigin="anonymous"></script>
+
   <style>
     :root {
       --primary-color: #4a6fa5;
@@ -74,6 +79,8 @@
       --graph-bg: #ffffff;
       --graph-axis: #cccccc;
       --graph-line: #4a6fa5;
+      --ad-container-bg: #f8f9fa;
+      --ad-border: #e0e0e0;
     }
 
     .dark-mode {
@@ -90,6 +97,8 @@
       --graph-bg: #16213e;
       --graph-axis: #4a5568;
       --graph-line: #5ac8fa;
+      --ad-container-bg: #1e293b;
+      --ad-border: #374151;
     }
 
     * {
@@ -310,6 +319,38 @@
       text-decoration: underline;
     }
 
+    /* Ad container styles */
+    .ad-container {
+      background-color: var(--ad-container-bg);
+      border: 1px solid var(--ad-border);
+      border-radius: 8px;
+      padding: 10px;
+      margin: 20px 0;
+      text-align: center;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .ad-label {
+      font-size: 0.75rem;
+      color: #888;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    .ad-container ins {
+      margin: 0 auto;
+      display: block;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      margin-top: auto;
+    }
+
     @media (max-width: 600px) {
       .calculator-container {
         border-radius: 0;
@@ -338,6 +379,11 @@
       .graph-controls {
         flex-direction: column;
       }
+      
+      .ad-container {
+        margin: 15px 0;
+        padding: 8px;
+      }
     }
 
     /* Animation for calculation results */
@@ -359,6 +405,20 @@
   </header>
   
   <main>
+    <!-- Top Ad -->
+    <div class="ad-container">
+      <div class="ad-label">Advertisement</div>
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-2488763930939291"
+           data-ad-slot="3829694054"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    
     <div class="calculator-container">
       <input type="text" id="display" disabled placeholder="0" aria-label="Calculator display">
       <div class="buttons">
@@ -410,6 +470,19 @@
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark/Light Mode">Toggle Dark/Light Mode</button>
     </div>
     
+    <!-- Middle Ad -->
+    <div class="ad-container">
+      <div class="ad-label">Advertisement</div>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-format="autorelaxed"
+           data-ad-client="ca-pub-2488763930939291"
+           data-ad-slot="5005728673"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
+    </div>
+    
     <div class="graph-container" id="graphContainer">
       <canvas id="graphCanvas"></canvas>
       <div class="graph-controls">
@@ -418,6 +491,20 @@
         <input type="number" id="graphMax" placeholder="Max X" value="5" step="0.5">
         <button onclick="plotGraph()" class="scientific">Plot</button>
       </div>
+    </div>
+    
+    <!-- Bottom Ad -->
+    <div class="ad-container">
+      <div class="ad-label">Advertisement</div>
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="ca-pub-2488763930939291"
+           data-ad-slot="3829694054"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
     </div>
   </main>
   
