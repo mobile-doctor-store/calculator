@@ -506,6 +506,13 @@
           bracketCount++;
         }
         
+        // Handle parentheses
+        if (value === '(') {
+          bracketCount++;
+        } else if (value === ')') {
+          if (bracketCount > 0) bracketCount--;
+        }
+        
         display.value += value;
       }
       currentExpression = display.value;
@@ -537,7 +544,18 @@
           bracketCount++;
         }
         
-        display.value = display.value.slice(0, -1);
+        // Check if we're deleting a function
+        const lastThree = display.value.slice(-3);
+        if (['sin', 'cos', 'tan', 'log'].includes(lastThree)) {
+          display.value = display.value.slice(0, -3);
+        } else if (display.value.slice(-2) === 'ln') {
+          display.value = display.value.slice(0, -2);
+        } else if (display.value.slice(-1) === '√') {
+          display.value = display.value.slice(0, -1);
+        } else {
+          display.value = display.value.slice(0, -1);
+        }
+        
         currentExpression = display.value;
       } else {
         display.value = '0';
@@ -735,7 +753,11 @@
       const y0 = height / 2;
       const scale = width / (maxX - minX);
       
-      ctx.strokeStyle = var('--graph-axis');
+      // Get CSS variable values properly
+      const graphAxisColor = getComputedStyle(document.documentElement).getPropertyValue('--graph-axis').trim();
+      const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text-color').trim();
+      
+      ctx.strokeStyle = graphAxisColor;
       ctx.lineWidth = 1;
       
       // X-axis
@@ -753,7 +775,8 @@
       // Draw ticks on X-axis
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
-      ctx.fillStyle = var('--text-color');
+      ctx.fillStyle = textColor;
+      ctx.font = '10px Arial';
       
       for (let x = Math.ceil(minX); x <= maxX; x++) {
         if (x === 0) continue; // Skip 0 to avoid overlapping with Y-axis
@@ -797,9 +820,11 @@
       const x0 = width / 2;
       const y0 = height / 2;
       const scale = width / (maxX - minX);
-      const step = (maxX - minX) / width;
       
-      ctx.strokeStyle = var('--graph-line');
+      // Get CSS variable values properly
+      const graphLineColor = getComputedStyle(document.documentElement).getPropertyValue('--graph-line').trim();
+      
+      ctx.strokeStyle = graphLineColor;
       ctx.lineWidth = 2;
       ctx.beginPath();
       
@@ -833,7 +858,7 @@
           }
           
           const xPos = i;
-          const yPos = height - (y0 + y * scale);
+          const yPos = y0 - y * scale;
           
           if (isFirstPoint) {
             ctx.moveTo(xPos, yPos);
@@ -847,11 +872,6 @@
       }
       
       ctx.stroke();
-    }
-    
-    // Helper function to get CSS variable value
-    function var(name) {
-      return getComputedStyle(document.documentElement).getPropertyValue(name);
     }
 
     // Add calculation to history
