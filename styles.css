@@ -1,0 +1,183 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body and Layout */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+/* Calculator Container */
+.calculator {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  padding: 20px;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Display Area */
+#display {
+  width: 100%;
+  height: 60px;
+  text-align: right;
+  font-size: 2.5rem;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  color: #333;
+  outline: none;
+}
+
+#display:focus {
+  border-color: #007bff;
+}
+
+/* Buttons Grid */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+/* Button Style */
+button {
+  padding: 20px;
+  font-size: 1.5rem;
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+button:active {
+  background-color: #ccc;
+}
+
+/* Special Buttons */
+button:nth-child(1), button:nth-child(2), button:nth-child(3), button:nth-child(4) {
+  background-color: #ff6f61;
+  color: #fff;
+}
+
+button:nth-child(20) {
+  background-color: #007bff;
+  color: #fff;
+}
+
+button:nth-child(5), button:nth-child(6), button:nth-child(7), button:nth-child(8) {
+  background-color: #f0ad4e;
+  color: #fff;
+}
+
+button:nth-child(9), button:nth-child(10), button:nth-child(11), button:nth-child(12) {
+  background-color: #5bc0de;
+  color: #fff;
+}
+
+/* History Section */
+.history {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.history h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.history ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.history li {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+/* Toggle Button */
+.theme-toggle {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.theme-toggle:hover {
+  background-color: #218838;
+}
+
+/* Dark Mode Styling */
+body.dark-mode {
+  background-color: #222;
+  color: #fff;
+}
+
+body.dark-mode .calculator {
+  background-color: #333;
+  color: #fff;
+}
+
+body.dark-mode #display {
+  background-color: #444;
+  color: #fff;
+  border-color: #555;
+}
+
+body.dark-mode button {
+  background-color: #555;
+  color: #fff;
+}
+
+body.dark-mode button:hover {
+  background-color: #666;
+}
+
+body.dark-mode button:active {
+  background-color: #777;
+}
+
+/* Responsive Layout */
+@media (max-width: 480px) {
+  .calculator {
+    width: 280px;
+    padding: 15px;
+  }
+
+  #display {
+    font-size: 2rem;
+  }
+
+  button {
+    padding: 15px;
+    font-size: 1.2rem;
+  }
+}
