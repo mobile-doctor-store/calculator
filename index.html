@@ -3,22 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Free advanced online scientific calculator with history, functions, and themes. Calculate math problems including trigonometry, logarithms, and more.">
-  <meta name="keywords" content="scientific calculator, online calculator, math calculator, trigonometry, logarithm, algebra calculator, math tool, calculator for students">
+  <meta name="description" content="Free advanced online scientific calculator with history, functions, graph visualization, and themes.">
+  <meta name="keywords" content="scientific calculator, graph calculator, online calculator, math calculator, trigonometry, logarithm, algebra calculator">
   <meta name="author" content="MobileDoctor">
   <meta name="robots" content="index, follow">
   
   <!-- Open Graph Tags -->
-  <meta property="og:title" content="Advanced Scientific Calculator - Free Online Math Tool">
-  <meta property="og:description" content="Free advanced scientific calculator for solving complex math problems. Includes trigonometry, logarithms, exponents, and more!">
+  <meta property="og:title" content="Advanced Scientific Calculator with Graph Visualization">
+  <meta property="og:description" content="Free advanced scientific calculator for solving complex math problems with graph visualization capabilities.">
   <meta property="og:image" content="https://calculator.mobiledoctor.org.in/images/calculator-thumbnail.jpg">
   <meta property="og:url" content="https://calculator.mobiledoctor.org.in">
   <meta property="og:type" content="website">
   
   <!-- Twitter Card Tags -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Advanced Scientific Calculator">
-  <meta name="twitter:description" content="Solve advanced math problems with this free online scientific calculator.">
+  <meta name="twitter:title" content="Advanced Scientific Calculator with Graph">
+  <meta name="twitter:description" content="Solve advanced math problems with graph visualization using this free online scientific calculator.">
   <meta name="twitter:image" content="https://calculator.mobiledoctor.org.in/images/calculator-thumbnail.jpg">
   <meta name="twitter:site" content="@mobiledoctor">
 
@@ -29,15 +29,15 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
   
   <!-- Title -->
-  <title>Advanced Scientific Calculator - Free Online Math Tool by MobileDoctor</title>
+  <title>Advanced Scientific Calculator with Graph - Free Online Math Tool</title>
 
   <!-- Structured Data for SEO: JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Advanced Scientific Calculator",
-    "description": "An advanced online scientific calculator with support for trigonometric, logarithmic, and other advanced mathematical functions.",
+    "name": "Advanced Scientific Calculator with Graph",
+    "description": "An advanced online scientific calculator with graph visualization, trigonometric, logarithmic, and other advanced mathematical functions.",
     "url": "https://calculator.mobiledoctor.org.in",
     "mainEntityOfPage": "https://calculator.mobiledoctor.org.in",
     "operatingSystem": "Any",
@@ -71,6 +71,9 @@
       --border-color: #d1d9e6;
       --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       --border-radius: 12px;
+      --graph-bg: #ffffff;
+      --graph-axis: #cccccc;
+      --graph-line: #4a6fa5;
     }
 
     .dark-mode {
@@ -84,6 +87,9 @@
       --text-color: #e2e8f0;
       --border-color: #4a5568;
       --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      --graph-bg: #16213e;
+      --graph-axis: #4a5568;
+      --graph-line: #5ac8fa;
     }
 
     * {
@@ -205,6 +211,15 @@
       opacity: 0.9;
     }
 
+    .graph-btn {
+      background-color: #8a4caf;
+      color: white;
+    }
+
+    .graph-btn:hover {
+      background-color: #6b3c86;
+    }
+
     .history {
       padding: 1.5rem;
       border-top: 1px solid var(--border-color);
@@ -244,11 +259,46 @@
       background-color: var(--secondary-color);
     }
 
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      background-color: var(--primary-color);
-      color: white;
+    .graph-container {
+      width: 100%;
+      max-width: 500px;
+      background-color: var(--button-bg);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      display: none;
+    }
+
+    .graph-container.active {
+      display: block;
+    }
+
+    #graphCanvas {
+      width: 100%;
+      height: 300px;
+      background-color: var(--graph-bg);
+      border-radius: 8px;
+    }
+
+    .graph-controls {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .graph-controls input {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      background-color: var(--display-bg);
+      color: var(--text-color);
+    }
+
+    .graph-controls button {
+      padding: 0.5rem 1rem;
     }
 
     .clear-history {
@@ -284,6 +334,10 @@
       .header-description {
         font-size: 0.9rem;
       }
+      
+      .graph-controls {
+        flex-direction: column;
+      }
     }
 
     /* Animation for calculation results */
@@ -301,7 +355,7 @@
 <body>
   <header>
     <h1>Advanced Scientific Calculator</h1>
-    <p class="header-description">Free online scientific calculator with advanced functions, calculation history, and dark/light mode</p>
+    <p class="header-description">Free online scientific calculator with graph visualization, advanced functions, and dark/light mode</p>
   </header>
   
   <main>
@@ -346,6 +400,8 @@
         <button onclick="calculateFactorial()" class="scientific" aria-label="Factorial">x!</button>
         <button onclick="calculatePi()" class="scientific" aria-label="Pi">π</button>
         <button onclick="calculateE()" class="scientific" aria-label="Euler's Number">e</button>
+        
+        <button onclick="toggleGraph()" class="graph-btn" aria-label="Toggle Graph">Graph</button>
       </div>
       <div class="history">
         <h3>Calculation History <button class="clear-history" onclick="clearHistory()">Clear</button></h3>
@@ -353,27 +409,59 @@
       </div>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark/Light Mode">Toggle Dark/Light Mode</button>
     </div>
+    
+    <div class="graph-container" id="graphContainer">
+      <canvas id="graphCanvas"></canvas>
+      <div class="graph-controls">
+        <input type="text" id="graphFunction" placeholder="Enter function (e.g., x^2)" value="x^2">
+        <input type="number" id="graphMin" placeholder="Min X" value="-5" step="0.5">
+        <input type="number" id="graphMax" placeholder="Max X" value="5" step="0.5">
+        <button onclick="plotGraph()" class="scientific">Plot</button>
+      </div>
+    </div>
   </main>
   
   <footer>
-    <p>&copy; 2025 MobileDoctor. All rights reserved. | Advanced Scientific Calculator v2.0</p>
+    <p>&copy; 2025 MobileDoctor. All rights reserved. | Advanced Scientific Calculator v2.1</p>
   </footer>
 
   <script>
-    // Get references to the display and history elements
-    let display = document.getElementById('display');
-    let historyList = document.getElementById('historyList');
+    // DOM Elements
+    const display = document.getElementById('display');
+    const historyList = document.getElementById('historyList');
+    const graphContainer = document.getElementById('graphContainer');
+    const graphCanvas = document.getElementById('graphCanvas');
+    const graphFunction = document.getElementById('graphFunction');
+    const graphMin = document.getElementById('graphMin');
+    const graphMax = document.getElementById('graphMax');
+    
+    // Calculator state
     let currentExpression = '';
     let lastResult = '';
-
+    let bracketCount = 0;
+    let ctx = graphCanvas.getContext('2d');
+    
     // Initialize calculator
     function initCalculator() {
       initTheme();
       loadHistory();
       clearDisplay();
+      setupCanvas();
       
       // Add keyboard support
       document.addEventListener('keydown', handleKeyPress);
+    }
+    
+    // Set up canvas for proper rendering
+    function setupCanvas() {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = graphCanvas.getBoundingClientRect();
+      
+      graphCanvas.width = rect.width * dpr;
+      graphCanvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      graphCanvas.style.width = `${rect.width}px`;
+      graphCanvas.style.height = `${rect.height}px`;
     }
 
     // Handle keyboard input
@@ -397,43 +485,76 @@
         appendToDisplay(key);
       } else if (key === '%') {
         appendToDisplay('%');
+      } else if (key === '^') {
+        calculatePower();
       }
     }
 
-    // Append a character to the display
+    // Append a character to the display with auto-bracket completion
     function appendToDisplay(value) {
-      if (display.value === '0' && value !== '.') {
+      if (display.value === '0' && value !== '.' && !isFunctionButton(value)) {
         display.value = value;
       } else {
         // Prevent multiple decimal points in a number
         if (value === '.' && display.value.split(/[\+\-\*\/]/).pop().includes('.')) {
           return;
         }
+        
+        // Handle auto bracket completion for functions
+        if (isFunctionButton(value)) {
+          value = value + '(';
+          bracketCount++;
+        }
+        
         display.value += value;
       }
       currentExpression = display.value;
+    }
+    
+    // Check if value represents a function button
+    function isFunctionButton(value) {
+      return ['sin', 'cos', 'tan', 'log', 'ln', '√'].includes(value);
     }
 
     // Clear the display
     function clearDisplay() {
       display.value = '0';
       currentExpression = '';
+      bracketCount = 0;
     }
 
     // Clear the last character from the display
     function clearLast() {
       if (display.value.length > 1) {
+        const lastChar = display.value.slice(-1);
+        
+        // Update bracket count if deleting an opening parenthesis
+        if (lastChar === '(') {
+          bracketCount--;
+        }
+        // Update bracket count if deleting a closing parenthesis
+        else if (lastChar === ')') {
+          bracketCount++;
+        }
+        
         display.value = display.value.slice(0, -1);
         currentExpression = display.value;
       } else {
         display.value = '0';
         currentExpression = '';
+        bracketCount = 0;
       }
     }
 
     // Safe calculation function to replace eval
     function calculate(expression) {
       try {
+        // Auto-close any open brackets
+        while (bracketCount > 0) {
+          expression += ')';
+          bracketCount--;
+        }
+        
         // Validate expression first
         if (!isValidExpression(expression)) {
           throw new Error('Invalid expression');
@@ -581,6 +702,157 @@
         appendToDisplay('e');
       }
     }
+    
+    // Toggle graph visibility
+    function toggleGraph() {
+      graphContainer.classList.toggle('active');
+      if (graphContainer.classList.contains('active')) {
+        plotGraph();
+      }
+    }
+    
+    // Plot graph based on function input
+    function plotGraph() {
+      const funcStr = graphFunction.value || 'x^2';
+      const minX = parseFloat(graphMin.value) || -5;
+      const maxX = parseFloat(graphMax.value) || 5;
+      
+      // Clear canvas
+      ctx.clearRect(0, 0, graphCanvas.width, graphCanvas.height);
+      
+      // Draw axes
+      drawAxes(minX, maxX);
+      
+      // Plot function
+      plotFunction(funcStr, minX, maxX);
+    }
+    
+    // Draw coordinate axes
+    function drawAxes(minX, maxX) {
+      const width = graphCanvas.width / (window.devicePixelRatio || 1);
+      const height = graphCanvas.height / (window.devicePixelRatio || 1);
+      const x0 = width / 2;
+      const y0 = height / 2;
+      const scale = width / (maxX - minX);
+      
+      ctx.strokeStyle = var('--graph-axis');
+      ctx.lineWidth = 1;
+      
+      // X-axis
+      ctx.beginPath();
+      ctx.moveTo(0, y0);
+      ctx.lineTo(width, y0);
+      ctx.stroke();
+      
+      // Y-axis
+      ctx.beginPath();
+      ctx.moveTo(x0, 0);
+      ctx.lineTo(x0, height);
+      ctx.stroke();
+      
+      // Draw ticks on X-axis
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillStyle = var('--text-color');
+      
+      for (let x = Math.ceil(minX); x <= maxX; x++) {
+        if (x === 0) continue; // Skip 0 to avoid overlapping with Y-axis
+        
+        const xPos = x0 + x * scale;
+        ctx.beginPath();
+        ctx.moveTo(xPos, y0 - 5);
+        ctx.lineTo(xPos, y0 + 5);
+        ctx.stroke();
+        
+        ctx.fillText(x.toString(), xPos, y0 + 8);
+      }
+      
+      // Draw ticks on Y-axis
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'middle';
+      
+      const yStep = height / (maxX - minX);
+      for (let y = Math.ceil(minX); y <= maxX; y++) {
+        if (y === 0) continue; // Skip 0 to avoid overlapping with X-axis
+        
+        const yPos = y0 - y * scale;
+        ctx.beginPath();
+        ctx.moveTo(x0 - 5, yPos);
+        ctx.lineTo(x0 + 5, yPos);
+        ctx.stroke();
+        
+        ctx.fillText(y.toString(), x0 - 8, yPos);
+      }
+      
+      // Draw origin point (0,0)
+      ctx.textAlign = 'right';
+      ctx.textBaseline = 'top';
+      ctx.fillText('0', x0 - 8, y0 + 8);
+    }
+    
+    // Plot a mathematical function
+    function plotFunction(funcStr, minX, maxX) {
+      const width = graphCanvas.width / (window.devicePixelRatio || 1);
+      const height = graphCanvas.height / (window.devicePixelRatio || 1);
+      const x0 = width / 2;
+      const y0 = height / 2;
+      const scale = width / (maxX - minX);
+      const step = (maxX - minX) / width;
+      
+      ctx.strokeStyle = var('--graph-line');
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      
+      let isFirstPoint = true;
+      
+      for (let i = 0; i <= width; i++) {
+        const x = minX + i * (maxX - minX) / width;
+        
+        try {
+          // Replace x in the function string with the current x value
+          let expression = funcStr.replace(/x/g, `(${x})`);
+          
+          // Handle special functions and constants
+          expression = expression.replace(/sin\(/g, 'Math.sin(');
+          expression = expression.replace(/cos\(/g, 'Math.cos(');
+          expression = expression.replace(/tan\(/g, 'Math.tan(');
+          expression = expression.replace(/log\(/g, 'Math.log10(');
+          expression = expression.replace(/ln\(/g, 'Math.log(');
+          expression = expression.replace(/π/g, 'Math.PI');
+          expression = expression.replace(/e/g, 'Math.E');
+          expression = expression.replace(/\^/g, '**');
+          expression = expression.replace(/√\(/g, 'Math.sqrt(');
+          
+          // Evaluate the expression
+          const y = new Function('return ' + expression)();
+          
+          // Check if y is a valid number
+          if (isNaN(y) || !isFinite(y)) {
+            isFirstPoint = true;
+            continue;
+          }
+          
+          const xPos = i;
+          const yPos = height - (y0 + y * scale);
+          
+          if (isFirstPoint) {
+            ctx.moveTo(xPos, yPos);
+            isFirstPoint = false;
+          } else {
+            ctx.lineTo(xPos, yPos);
+          }
+        } catch (e) {
+          isFirstPoint = true;
+        }
+      }
+      
+      ctx.stroke();
+    }
+    
+    // Helper function to get CSS variable value
+    function var(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name);
+    }
 
     // Add calculation to history
     function addToHistory(calculation) {
@@ -627,6 +899,11 @@
       // Save theme preference to localStorage
       const isDarkMode = document.body.classList.contains('dark-mode');
       localStorage.setItem('darkMode', isDarkMode);
+      
+      // Redraw graph if visible
+      if (graphContainer.classList.contains('active')) {
+        plotGraph();
+      }
     }
 
     // Initialize theme from localStorage
@@ -639,6 +916,12 @@
 
     // Initialize when page loads
     window.onload = initCalculator;
+    window.addEventListener('resize', function() {
+      if (graphContainer.classList.contains('active')) {
+        setupCanvas();
+        plotGraph();
+      }
+    });
   </script>
 </body>
 </html>
