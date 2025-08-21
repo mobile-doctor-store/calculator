@@ -3,31 +3,60 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Advanced online scientific calculator. Calculate math problems, including trigonometry, logarithms, and more.">
-  <meta name="keywords" content="calculator, scientific calculator, online calculator, math, trigonometry, logarithm, calculator for students">
+  <meta name="description" content="Free advanced online scientific calculator with history, functions, and themes. Calculate math problems including trigonometry, logarithms, and more.">
+  <meta name="keywords" content="scientific calculator, online calculator, math calculator, trigonometry, logarithm, algebra calculator, math tool, calculator for students">
   <meta name="author" content="MobileDoctor">
   <meta name="robots" content="index, follow">
   
   <!-- Open Graph Tags -->
-  <meta property="og:title" content="Advanced Scientific Calculator">
-  <meta property="og:description" content="An advanced scientific calculator for solving complex math problems. Includes trigonometry, logarithms, and more!">
+  <meta property="og:title" content="Advanced Scientific Calculator - Free Online Math Tool">
+  <meta property="og:description" content="Free advanced scientific calculator for solving complex math problems. Includes trigonometry, logarithms, exponents, and more!">
   <meta property="og:image" content="https://calculator.mobiledoctor.org.in/images/calculator-thumbnail.jpg">
   <meta property="og:url" content="https://calculator.mobiledoctor.org.in">
+  <meta property="og:type" content="website">
   
   <!-- Twitter Card Tags -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Advanced Scientific Calculator">
-  <meta name="twitter:description" content="Solve advanced math problems with this online scientific calculator.">
+  <meta name="twitter:description" content="Solve advanced math problems with this free online scientific calculator.">
   <meta name="twitter:image" content="https://calculator.mobiledoctor.org.in/images/calculator-thumbnail.jpg">
+  <meta name="twitter:site" content="@mobiledoctor">
 
   <!-- Canonical Link for SEO -->
   <link rel="canonical" href="https://calculator.mobiledoctor.org.in">
   
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
+  
   <!-- Title -->
-  <title>Advanced Scientific Calculator - Online Math Tool</title>
+  <title>Advanced Scientific Calculator - Free Online Math Tool by MobileDoctor</title>
 
-  <!-- Google AdSense Script -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2488763930939291" crossorigin="anonymous"></script>
+  <!-- Structured Data for SEO: JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Advanced Scientific Calculator",
+    "description": "An advanced online scientific calculator with support for trigonometric, logarithmic, and other advanced mathematical functions.",
+    "url": "https://calculator.mobiledoctor.org.in",
+    "mainEntityOfPage": "https://calculator.mobiledoctor.org.in",
+    "operatingSystem": "Any",
+    "applicationCategory": "EducationalApplication",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MobileDoctor",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://calculator.mobiledoctor.org.in/logo.png"
+      }
+    }
+  }
+  </script>
 
   <style>
     :root {
@@ -41,6 +70,7 @@
       --text-color: #333333;
       --border-color: #d1d9e6;
       --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --border-radius: 12px;
     }
 
     .dark-mode {
@@ -70,6 +100,7 @@
       display: flex;
       flex-direction: column;
       transition: background-color 0.3s ease, color 0.3s ease;
+      line-height: 1.6;
     }
 
     header {
@@ -83,6 +114,14 @@
     h1 {
       font-size: 2.2rem;
       font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .header-description {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     main {
@@ -93,11 +132,11 @@
       padding: 2rem 1rem;
     }
 
-    .calculator {
+    .calculator-container {
       width: 100%;
       max-width: 500px;
       background-color: var(--button-bg);
-      border-radius: 12px;
+      border-radius: var(--border-radius);
       box-shadow: var(--shadow);
       overflow: hidden;
       margin-bottom: 2rem;
@@ -131,6 +170,7 @@
       color: var(--text-color);
       cursor: pointer;
       transition: background-color 0.2s;
+      min-height: 60px;
     }
 
     button:hover {
@@ -173,6 +213,9 @@
     .history h3 {
       margin-bottom: 1rem;
       color: var(--primary-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     #historyList {
@@ -208,81 +251,112 @@
       color: white;
     }
 
+    .clear-history {
+      background: none;
+      border: none;
+      color: var(--accent-color);
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-decoration: underline;
+    }
+
     @media (max-width: 600px) {
-      .calculator {
+      .calculator-container {
         border-radius: 0;
       }
       
       button {
         padding: 0.8rem;
         font-size: 1rem;
+        min-height: 50px;
       }
       
       #display {
         font-size: 1.5rem;
         padding: 1rem;
+        min-height: 60px;
       }
+      
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .header-description {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Animation for calculation results */
+    @keyframes calculate {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+    
+    .calculating {
+      animation: calculate 0.3s ease;
     }
   </style>
 </head>
 <body>
   <header>
     <h1>Advanced Scientific Calculator</h1>
+    <p class="header-description">Free online scientific calculator with advanced functions, calculation history, and dark/light mode</p>
   </header>
   
   <main>
-    <div class="calculator">
-      <input type="text" id="display" disabled placeholder="0">
+    <div class="calculator-container">
+      <input type="text" id="display" disabled placeholder="0" aria-label="Calculator display">
       <div class="buttons">
-        <button onclick="clearDisplay()" class="operator">AC</button>
-        <button onclick="clearLast()" class="operator">C</button>
-        <button onclick="appendToDisplay('%')" class="operator">%</button>
-        <button onclick="appendToDisplay('/')" class="operator">/</button>
+        <button onclick="clearDisplay()" class="operator" aria-label="All Clear">AC</button>
+        <button onclick="clearLast()" class="operator" aria-label="Clear">C</button>
+        <button onclick="appendToDisplay('%')" class="operator" aria-label="Percentage">%</button>
+        <button onclick="appendToDisplay('/')" class="operator" aria-label="Divide">/</button>
         
-        <button onclick="appendToDisplay('7')">7</button>
-        <button onclick="appendToDisplay('8')">8</button>
-        <button onclick="appendToDisplay('9')">9</button>
-        <button onclick="appendToDisplay('*')" class="operator">×</button>
+        <button onclick="appendToDisplay('7')" aria-label="Seven">7</button>
+        <button onclick="appendToDisplay('8')" aria-label="Eight">8</button>
+        <button onclick="appendToDisplay('9')" aria-label="Nine">9</button>
+        <button onclick="appendToDisplay('*')" class="operator" aria-label="Multiply">×</button>
         
-        <button onclick="appendToDisplay('4')">4</button>
-        <button onclick="appendToDisplay('5')">5</button>
-        <button onclick="appendToDisplay('6')">6</button>
-        <button onclick="appendToDisplay('-')" class="operator">-</button>
+        <button onclick="appendToDisplay('4')" aria-label="Four">4</button>
+        <button onclick="appendToDisplay('5')" aria-label="Five">5</button>
+        <button onclick="appendToDisplay('6')" aria-label="Six">6</button>
+        <button onclick="appendToDisplay('-')" class="operator" aria-label="Subtract">-</button>
         
-        <button onclick="appendToDisplay('1')">1</button>
-        <button onclick="appendToDisplay('2')">2</button>
-        <button onclick="appendToDisplay('3')">3</button>
-        <button onclick="appendToDisplay('+')" class="operator">+</button>
+        <button onclick="appendToDisplay('1')" aria-label="One">1</button>
+        <button onclick="appendToDisplay('2')" aria-label="Two">2</button>
+        <button onclick="appendToDisplay('3')" aria-label="Three">3</button>
+        <button onclick="appendToDisplay('+')" class="operator" aria-label="Add">+</button>
         
-        <button onclick="appendToDisplay('0')">0</button>
-        <button onclick="appendToDisplay('.')">.</button>
-        <button onclick="calculateResult()" class="equals">=</button>
+        <button onclick="appendToDisplay('0')" aria-label="Zero">0</button>
+        <button onclick="appendToDisplay('.')" aria-label="Decimal Point">.</button>
+        <button onclick="calculateResult()" class="equals" aria-label="Equals">=</button>
         
-        <button onclick="calculatePower()" class="scientific">x^y</button>
-        <button onclick="calculateSquareRoot()" class="scientific">√</button>
-        <button onclick="calculateSin()" class="scientific">sin</button>
-        <button onclick="calculateCos()" class="scientific">cos</button>
+        <button onclick="calculatePower()" class="scientific" aria-label="Power">x^y</button>
+        <button onclick="calculateSquareRoot()" class="scientific" aria-label="Square Root">√</button>
+        <button onclick="calculateSin()" class="scientific" aria-label="Sine">sin</button>
+        <button onclick="calculateCos()" class="scientific" aria-label="Cosine">cos</button>
         
-        <button onclick="calculateTan()" class="scientific">tan</button>
-        <button onclick="calculateLog()" class="scientific">log</button>
-        <button onclick="calculateLn()" class="scientific">ln</button>
-        <button onclick="appendToDisplay('(')" class="scientific">(</button>
+        <button onclick="calculateTan()" class="scientific" aria-label="Tangent">tan</button>
+        <button onclick="calculateLog()" class="scientific" aria-label="Logarithm">log</button>
+        <button onclick="calculateLn()" class="scientific" aria-label="Natural Logarithm">ln</button>
+        <button onclick="appendToDisplay('(')" class="scientific" aria-label="Left Parenthesis">(</button>
         
-        <button onclick="appendToDisplay(')')" class="scientific">)</button>
-        <button onclick="calculateFactorial()" class="scientific">x!</button>
-        <button onclick="calculatePi()" class="scientific">π</button>
-        <button onclick="calculateE()" class="scientific">e</button>
+        <button onclick="appendToDisplay(')')" class="scientific" aria-label="Right Parenthesis">)</button>
+        <button onclick="calculateFactorial()" class="scientific" aria-label="Factorial">x!</button>
+        <button onclick="calculatePi()" class="scientific" aria-label="Pi">π</button>
+        <button onclick="calculateE()" class="scientific" aria-label="Euler's Number">e</button>
       </div>
       <div class="history">
-        <h3>History</h3>
+        <h3>Calculation History <button class="clear-history" onclick="clearHistory()">Clear</button></h3>
         <ul id="historyList"></ul>
       </div>
-      <button class="theme-toggle" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle Dark/Light Mode">Toggle Dark/Light Mode</button>
     </div>
   </main>
   
   <footer>
-    <p>&copy; 2025 MobileDoctor. All rights reserved.</p>
+    <p>&copy; 2025 MobileDoctor. All rights reserved. | Advanced Scientific Calculator v2.0</p>
   </footer>
 
   <script>
@@ -292,11 +366,49 @@
     let currentExpression = '';
     let lastResult = '';
 
+    // Initialize calculator
+    function initCalculator() {
+      initTheme();
+      loadHistory();
+      clearDisplay();
+      
+      // Add keyboard support
+      document.addEventListener('keydown', handleKeyPress);
+    }
+
+    // Handle keyboard input
+    function handleKeyPress(event) {
+      const key = event.key;
+      
+      if (/[0-9]/.test(key)) {
+        appendToDisplay(key);
+      } else if (key === '+' || key === '-' || key === '*' || key === '/') {
+        appendToDisplay(key);
+      } else if (key === '.') {
+        appendToDisplay('.');
+      } else if (key === 'Enter' || key === '=') {
+        event.preventDefault();
+        calculateResult();
+      } else if (key === 'Escape') {
+        clearDisplay();
+      } else if (key === 'Backspace') {
+        clearLast();
+      } else if (key === '(' || key === ')') {
+        appendToDisplay(key);
+      } else if (key === '%') {
+        appendToDisplay('%');
+      }
+    }
+
     // Append a character to the display
     function appendToDisplay(value) {
       if (display.value === '0' && value !== '.') {
         display.value = value;
       } else {
+        // Prevent multiple decimal points in a number
+        if (value === '.' && display.value.split(/[\+\-\*\/]/).pop().includes('.')) {
+          return;
+        }
         display.value += value;
       }
       currentExpression = display.value;
@@ -322,6 +434,11 @@
     // Safe calculation function to replace eval
     function calculate(expression) {
       try {
+        // Validate expression first
+        if (!isValidExpression(expression)) {
+          throw new Error('Invalid expression');
+        }
+        
         // Replace functions and constants with JavaScript equivalents
         expression = expression.replace(/sin\(/g, 'Math.sin(');
         expression = expression.replace(/cos\(/g, 'Math.cos(');
@@ -332,6 +449,7 @@
         expression = expression.replace(/e/g, 'Math.E');
         expression = expression.replace(/\^/g, '**');
         expression = expression.replace(/√\(/g, 'Math.sqrt(');
+        expression = expression.replace(/%/g, '/100');
         
         // Use Function constructor instead of eval for better security
         return new Function('return ' + expression)();
@@ -340,25 +458,56 @@
       }
     }
 
+    // Validate expression for security
+    function isValidExpression(expr) {
+      // Remove allowed functions and constants
+      const cleanedExpr = expr.replace(/sin|cos|tan|log|ln|π|e|√|\d|\+|\-|\*|\/|\(|\)|\.|\^|%/g, '');
+      
+      // If anything remains, it's not valid
+      return cleanedExpr.length === 0;
+    }
+
     // Calculate the result
     function calculateResult() {
       try {
         if (!currentExpression) return;
         
+        // Add animation to display
+        display.classList.add('calculating');
+        
         let result = calculate(currentExpression);
         lastResult = result;
+        
+        // Format number to avoid too long decimals
+        if (typeof result === 'number') {
+          result = roundResult(result);
+        }
         
         // Add the calculation to history
         addToHistory(`${currentExpression} = ${result}`);
         
         display.value = result;
         currentExpression = result.toString();
+        
+        // Save history to localStorage
+        saveHistory();
+        
+        // Remove animation after calculation
+        setTimeout(() => {
+          display.classList.remove('calculating');
+        }, 300);
       } catch (e) {
         display.value = 'Error';
         setTimeout(() => {
           display.value = currentExpression || '0';
         }, 1500);
       }
+    }
+
+    // Round result to avoid floating point issues
+    function roundResult(num) {
+      // Round to 10 decimal places to avoid floating point precision issues
+      return Math.round(num * 10000000000) / 10000000000;
     }
 
     // Scientific functions
@@ -408,6 +557,7 @@
         addToHistory(`${num}! = ${result}`);
         display.value = result;
         currentExpression = result.toString();
+        saveHistory();
       } catch (e) {
         display.value = 'Error';
         setTimeout(() => {
@@ -444,6 +594,32 @@
       }
     }
 
+    // Clear history
+    function clearHistory() {
+      historyList.innerHTML = '';
+      localStorage.removeItem('calculatorHistory');
+    }
+
+    // Save history to localStorage
+    function saveHistory() {
+      const historyItems = [];
+      for (let i = 0; i < historyList.children.length; i++) {
+        historyItems.push(historyList.children[i].textContent);
+      }
+      localStorage.setItem('calculatorHistory', JSON.stringify(historyItems));
+    }
+
+    // Load history from localStorage
+    function loadHistory() {
+      const savedHistory = localStorage.getItem('calculatorHistory');
+      if (savedHistory) {
+        const historyItems = JSON.parse(savedHistory);
+        historyItems.forEach(item => {
+          addToHistory(item);
+        });
+      }
+    }
+
     // Toggle between light and dark modes
     function toggleTheme() {
       document.body.classList.toggle('dark-mode');
@@ -459,12 +635,6 @@
       if (darkMode) {
         document.body.classList.add('dark-mode');
       }
-    }
-
-    // Initialize calculator
-    function initCalculator() {
-      initTheme();
-      clearDisplay();
     }
 
     // Initialize when page loads
